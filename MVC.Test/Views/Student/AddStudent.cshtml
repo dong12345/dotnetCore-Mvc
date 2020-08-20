@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "AddStudent";
+    Layout = "MyLayout";
+}
+
+@model StudentViewModel
+
+<form asp-controller="student" asp-action="AddStudent" method="post" class="layui-form">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-required" asp-for="Name"></label>
+        <div class="layui-input-block">
+            <input asp-for="Name" type="text" required lay-verify="required" class="layui-input" autocomplete="off" />
+            <span asp-validation-for="Name" class="red"></span>
+        </div>
+    </div>
+
+    <div  class="layui-form-item">
+        <label class="layui-form-label layui-required" asp-for="Age"></label>
+        <div class="layui-input-block">
+            <input asp-for="Age" type="number" required lay-verify="required" class="layui-input" />
+            <span asp-validation-for="Age" class="red"></span>
+        </div>
+    </div>
+
+    <div  class="layui-form-item">
+        <label class="layui-form-label layui-required" asp-for="TeacherName"></label>
+        <div class="layui-input-block">
+            <input asp-for="TeacherName" required lay-verify="required" class="layui-input" />
+            <span asp-validation-for="TeacherName" class="red"></span>
+        </div>
+    </div>
+    <button asp-action="AddStudent" class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
+</form>
+
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+        });
+    });
+</script>
+

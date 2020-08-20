@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+@model StudentViewModel
+@{
+    await Html.RenderPartialAsync("/Views/Shared/_PartialLayui.cshtml");
+}
+
+@*<form asp-controller="student" asp-action="Edit" method="post"  class="layui-form">*@
+<form  asp-controller="student" class="layui-form text_center">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    @await Html.PartialAsync("_PartialEdit.cshtml", Model)
+    <input type="button" id="edit" class="layui-btn" lay-submit lay-filter="formDemo" value="提交" />
+    <input type="button" id="cancel" class="layui-btn" value="取消" />
+</form>
+
+<script>
+    //Demo
+    layui.use(['form','jquery'], function () {
+        var form = layui.form, $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            //layer.msg(JSON.stringify(data.field));
+            //return false;
+            var obj = data.field;
+            $.ajax({
+                type: 'post',
+                url: '/student/edit',
+                data: obj,
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    if (res.code == 200) {
+                        layer.msg(res.message, { icon: 1, time: 500 }, function () {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layui.table.reload('demo');//重载父页表格，参数为表格ID
+                            parent.layer.close(index);
+                        });
+                    }
+                }
+            });
+        });
+
+        $("#cancel").on("click", function () {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layui.table.reload('demo');//重载父页表格，参数为表格ID
+            parent.layer.close(index);
+            //layer.msg("你点击了取消", { icon: 1, time: 200 },function () {
+            //    var index = parent.layer.getFrameIndex(window.name);
+            //    parent.layui.table.reload('demo');//重载父页表格，参数为表格ID
+            //    parent.layer.close(index);
+            //});
+        })
+    });
+</script>
+
+

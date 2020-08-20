@@ -1,0 +1,16 @@
+﻿.red {
+    color: #f00;
+}
+
+.text_center {
+text-align:center;
+}
+
+.layui-form-label.layui-required:after {
+    content: "*";
+    color: red;
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translate(0,-50%);
+}

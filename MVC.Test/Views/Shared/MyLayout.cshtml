@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    @await Html.PartialAsync("_PartialLayui.cshtml")
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .layui-header {
+            background-color: #393d49;
+        }
+
+        .layui-nav {
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="layui-header  header-doc">
+        <div class="container">
+            <ul class="layui-nav" lay-filter="">
+                <li class="layui-nav-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-area="" asp-controller="Student" asp-action="Index">学生列表</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a asp-area="" asp-controller="movies" asp-action="Index">电影列表</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="container">
+        <div>
+            @RenderBody()
+        </div>
+    </div>
+
+    <script>
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function () {
+            var element = layui.element;
+
+            //…
+        });
+    </script>
+    <script src="~/js/request.js"></script>
+</body>
+</html>

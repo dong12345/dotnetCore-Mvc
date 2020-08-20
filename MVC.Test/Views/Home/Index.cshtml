@@ -1,0 +1,20 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<environment names="Development">
+    <div class="text-center">
+        <h1 class="display-4">Welcome</h1>
+        <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+        <a  asp-action="test">Click here to Test page</a>
+
+        <a asp-action="edit" asp-route-id="99BA5433-DF5F-A898-C8E0-78B8BA55F251">编辑</a>
+    </div>
+</environment>
+
+<environment names="Production">
+    <h1>哈哈，我是正式环境</h1>
+
+</environment>
+

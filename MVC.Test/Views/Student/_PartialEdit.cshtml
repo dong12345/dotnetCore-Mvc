@@ -1,0 +1,31 @@
+﻿
+@model StudentViewModel
+
+<h1>我是分部编辑视图哦</h1>
+<div style="width:80%">
+    <div class="layui-form-item">
+        <input type="hidden" asp-for="Id" />
+        <label class="layui-form-label layui-required" asp-for="Name"></label>
+        <div class="layui-input-block">
+            <input asp-for="Name" type="text" required lay-verify="required" class="layui-input" autocomplete="off" />
+            <span asp-validation-for="Name" class="red"></span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-required" asp-for="Age"></label>
+        <div class="layui-input-block">
+            <input asp-for="Age" type="number" required lay-verify="required" class="layui-input" />
+            <span asp-validation-for="Age" class="red"></span>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label layui-required" asp-for="TeacherName"></label>
+        <div class="layui-input-block">
+            <input asp-for="TeacherName" required lay-verify="required" class="layui-input" />
+            <span asp-validation-for="TeacherName" class="red"></span>
+        </div>
+    </div>
+</div>
+
