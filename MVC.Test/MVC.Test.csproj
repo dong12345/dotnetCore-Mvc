@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MVC.Test.Data\MVC.Test.Data.csproj" />
     <ProjectReference Include="..\Mvc.Test.Model\MVC.Test.Model.csproj" />
+    <ProjectReference Include="..\MVC.Test.Service\MVC.Test.Service.csproj" />
   </ItemGroup>
 
 

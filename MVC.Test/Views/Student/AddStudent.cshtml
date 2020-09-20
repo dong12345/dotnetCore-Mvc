@@ -1,49 +1,91 @@
 ﻿
 @{
     ViewData["Title"] = "AddStudent";
-    Layout = "MyLayout";
+    Layout = null;
 }
 
 @model StudentViewModel
 
-<form asp-controller="student" asp-action="AddStudent" method="post" class="layui-form">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@{
+    await Html.RenderPartialAsync("/Views/Shared/_PartialLayui.cshtml");
+}
 
-    <div class="layui-form-item">
-        <label class="layui-form-label layui-required" asp-for="Name"></label>
-        <div class="layui-input-block">
-            <input asp-for="Name" type="text" required lay-verify="required" class="layui-input" autocomplete="off" />
-            <span asp-validation-for="Name" class="red"></span>
-        </div>
-    </div>
+<div>
+    <form class="layui-form">
+        @Html.AntiForgeryToken()
+        <div class="iframeContent text_center">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required" asp-for="Name"></label>
+                <div class="layui-input-block">
+                    <input asp-for="Name" type="text" required lay-verify="required" class="layui-input" autocomplete="off" />
+                    <span asp-validation-for="Name" class="red"></span>
+                </div>
+            </div>
 
-    <div  class="layui-form-item">
-        <label class="layui-form-label layui-required" asp-for="Age"></label>
-        <div class="layui-input-block">
-            <input asp-for="Age" type="number" required lay-verify="required" class="layui-input" />
-            <span asp-validation-for="Age" class="red"></span>
-        </div>
-    </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required" asp-for="Age"></label>
+                <div class="layui-input-block">
+                    <input asp-for="Age" type="number" required lay-verify="required" class="layui-input" />
+                    <span asp-validation-for="Age" class="red"></span>
+                </div>
+            </div>
 
-    <div  class="layui-form-item">
-        <label class="layui-form-label layui-required" asp-for="TeacherName"></label>
-        <div class="layui-input-block">
-            <input asp-for="TeacherName" required lay-verify="required" class="layui-input" />
-            <span asp-validation-for="TeacherName" class="red"></span>
+            <div class="layui-form-item">
+                <label class="layui-form-label layui-required" asp-for="TeacherName"></label>
+                <div class="layui-input-block">
+                    <input asp-for="TeacherName" required lay-verify="required" class="layui-input" />
+                    <span asp-validation-for="TeacherName" class="red"></span>
+                </div>
+            </div>
+            <button type="button" class="layui-btn" id="add" lay-submit lay-filter="formDemo">提交</button>
+            @*<input type="button" id="add" class="layui-btn" lay-submit lay-filter="formDemo" value="提交" />*@
         </div>
-    </div>
-    <button asp-action="AddStudent" class="layui-btn" lay-submit lay-filter="formDemo">提交</button>
-</form>
+    </form>
+</div>
 
 <script>
     //Demo
-    layui.use('form', function () {
-        var form = layui.form;
+    layui.use(['form', 'jquery'], function () {
+        var form = layui.form, $ = layui.jquery;
 
         //监听提交
         form.on('submit(formDemo)', function (data) {
-            //layer.msg(JSON.stringify(data.field));
-            //return false;
+
+            var data = data.field;
+            jqPost({
+                url: '/student/addStudent',
+                data: data,
+                success: function (res) {
+                    console.log('添加返回的数据为:', res);
+                    if (res.isSuccess) {
+                        layer.msg(res.msg, { icon: 1, time: 1000 }, function () {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layui.table.reload('demo');//重载父页表格，参数为表格ID
+                            parent.layer.close(index);
+                        });
+                    }
+                }
+            });
+
+            //console.log('添加数据为:', data.field);
+            //var token = $('input[name="AntiforgeryKey_shiyudong"]').val();
+            //data.field.AntiforgeryKey_shiyudong = token;
+            //$.ajax({
+            //    url: '/student/addStudent',
+            //    type: 'post',
+            //    data: data.field,
+            //    dataType: 'json',
+            //    success: function (res) {
+            //        if (res.isSuccess == true) {
+            //            layer.msg("添加成功", { icon: 1, time: 1000 }, function () {
+            //                var index = parent.layer.getFrameIndex(window.name);
+            //                parent.layui.table.reload('demo');//重载父页表格，参数为表格ID
+            //                parent.layer.close(index);
+            //            });
+            //        }
+            //    }
+            //});
         });
     });
 </script>

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MVC.Test.Data;
+using MVC.Test.IService.test;
 
 namespace MVC.Test
 {
@@ -29,7 +30,8 @@ namespace MVC.Test
             services.AddRazorPages().AddRazorRuntimeCompilation();
 
             var param = Configuration.GetConnectionString("param");
-            services.AddDbContext<TestDBContext>(options => {
+
+            services.AddDbContextPool<TestDBContext>(options => {
                 //启用显示敏感数据,生成的sql语句中可以看到参数的具体值
                 options.EnableSensitiveDataLogging(true);
                 options.UseSqlServer(Configuration.GetConnectionString("myConnectionString"));
@@ -45,6 +47,12 @@ namespace MVC.Test
                 //options.HeaderName = "X-CSRF-TOKEN-shiyudong";
                 options.SuppressXFrameOptionsHeader = false;
             });
+
+
+            //services.AddSingleton<ISingTest, SingTest>();
+            //services.AddScoped<ISconTest, SconTest>();
+            //services.AddTransient<ITranTest, TranTest>();
+            //services.AddScoped<IAService, AService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

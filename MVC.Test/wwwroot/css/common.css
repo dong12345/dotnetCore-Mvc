@@ -3,7 +3,12 @@
 }
 
 .text_center {
-text-align:center;
+    text-align: center;
+}
+
+.iframeContent {
+    margin:0 auto;
+    width: 80%;
 }
 
 .layui-form-label.layui-required:after {

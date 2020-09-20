@@ -6,7 +6,7 @@
 
 
 <div>
-    <a class="nav-link text-dark" asp-action="addStudent">添加学生</a>
+    <a id="add" class="layui-btn layui-btn-sm">添加学生</a>
     <cache expires-after="@TimeSpan.FromSeconds(5)">@DateTime.Now</cache>
 </div>
 
@@ -20,7 +20,7 @@
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
-    layui.use(['table', 'jquery'], function () {
+    layui.use(['table'], function () {
         var table = layui.table, $ = layui.jquery;
         //第一个实例
         table.render({
@@ -48,8 +48,8 @@
                         url: '/student/delete',
                         data: { id: data.id },
                         success: function (res) {
-                            if (res.isSuccess == true) {
-                                layer.msg("删除成功", { icon: 1, time: 1000 }, function () {
+                            if (res.isSuccess) {
+                                layer.msg(res.msg, { icon: 1, time: 1000 }, function () {
                                     obj.del();
                                 });
                             }
@@ -63,7 +63,7 @@
                     type: 2,
                     title: "编辑用户",
                     area: ["700px", "450px"],
-                    content: '/Student/Edit/' + id,
+                    content: '/Student/AddOrModify/' + id,
                     end: function () {
                         //加载层-默认风格
                         layer.load();
@@ -76,6 +76,21 @@
             }
         });
 
-
+        $("#add").on("click", function () {
+            layer.open({
+                type: 2,
+                title: "新增用户",
+                area: ["700px", "450px"],
+                content: '/Student/AddOrModify', 
+                end: function () {
+                    //加载层-默认风格
+                    layer.load();
+                    //此处演示关闭
+                    setTimeout(function () {
+                        layer.closeAll('loading');
+                    }, 500);
+                }
+            });
+        })
     });
 </script>

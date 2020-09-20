@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>..\MVC.Test.Api\bin\Debug\</OutputPath>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MVC.Test.IRepository\MVC.Test.IRepository.csproj" />
+    <ProjectReference Include="..\MVC.Test.IService\MVC.Test.IService.csproj" />
+  </ItemGroup>
+
+</Project>

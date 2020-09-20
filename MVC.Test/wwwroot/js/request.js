@@ -1,6 +1,4 @@
-﻿
-
-function jqGet(_option) {
+﻿function jqGet(_option) {
     _option = typeof (_option) == undefined ? {} : _option;
     $.ajax({
         url: _option.url,    //请求的url地址

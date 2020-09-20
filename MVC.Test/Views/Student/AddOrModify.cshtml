@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "AddOrModify";
+    Layout = null;
+}
+
+@{
+    await Html.RenderPartialAsync("/Views/Shared/_PartialLayui.cshtml");
+}
+@model StudentViewModel
+<form asp-controller="student" class="layui-form text_center">
+    <div class="iframeContent">
+        <div class="layui-form-item">
+            <input type="hidden" asp-for="Id" />
+            <label class="layui-form-label layui-required" asp-for="Name"></label>
+            <div class="layui-input-block">
+                <input asp-for="Name" type="text" required lay-verify="required" class="layui-input" autocomplete="off" />
+                <span asp-validation-for="Name" class="red"></span>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required" asp-for="Age"></label>
+            <div class="layui-input-block">
+                <input asp-for="Age" type="number" required lay-verify="required" class="layui-input" />
+                <span asp-validation-for="Age" class="red"></span>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-required" asp-for="TeacherName"></label>
+            <div class="layui-input-block">
+                <input asp-for="TeacherName" required lay-verify="required" class="layui-input" />
+                <span asp-validation-for="TeacherName" class="red"></span>
+            </div>
+        </div>
+    </div>
+    <input type="button" id="edit" class="layui-btn" lay-submit lay-filter="formDemo" value="提交" />
+    <input type="button" id="cancel" class="layui-btn" value="取消" />
+</form>
+
+<script>
+    //Demo
+    layui.use(['form'], function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            var obj = data.field;
+            $.ajax({
+                type: 'post',
+                url: '/student/AddOrModify',
+                data: obj,
+                dataType: "json",
+                success: function (res) {
+                    if (res.isSuccess) {
+                        layer.msg(res.msg, { icon: 1, time: 500 }, function () {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            parent.layui.table.reload('demo');//重载父页表格，参数为表格ID
+                            parent.layer.close(index);
+                        });
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+        });
+
+        $("#cancel").on("click", function () {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        })
+    });
+</script>
